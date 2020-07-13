@@ -75,39 +75,54 @@ require 'pry'
 
 CHUNK_SIZE = 4
 
+#def sum_pairs(ints, s)
+#  arr = []
+#  limit = ints.size
+#  chunk = 0
+#
+#  loop do
+#    it1 = 0
+#    break if chunk >= limit + CHUNK_SIZE
+#    
+#    loop do
+#      it2 = chunk + 1
+#      it2 = it1 + 1 if it1 >= it2
+#      break if it1 >= chunk + CHUNK_SIZE || it1 >= limit 
+#
+#      loop do
+#        break if it2 >= chunk + CHUNK_SIZE + 1 || it2 >= limit
+#        
+#        if ints[it1] + ints[it2] == s
+#          arr << [[ints[it1], ints[it2]], [it1, it2]]
+#          limit = it2 + 1
+#        end
+#        
+#        it2 += 1
+#      end
+#
+#      it1 += 1
+#    end
+#    
+#    chunk += CHUNK_SIZE
+#  end
+#  
+#  result = arr.sort_by { |_, (ind1, ind2)| ind2 }.first 
+#  result ? result[0] : nil
+#end
+
 def sum_pairs(ints, s)
-  arr = []
-  limit = ints.size
-  chunk = 0
-
+  i2 = 1
   loop do
-    it1 = 0
-    break if chunk >= limit + CHUNK_SIZE
-    
+    break if i2 == ints.size
+    i1 = 0
     loop do
-      it2 = chunk + 1
-      it2 = it1 + 1 if it1 >= it2
-      break if it1 >= chunk + CHUNK_SIZE || it1 >= limit 
-
-      loop do
-        break if it2 >= chunk + CHUNK_SIZE + 1 || it2 >= limit
-        
-        if ints[it1] + ints[it2] == s
-          arr << [[ints[it1], ints[it2]], [it1, it2]]
-          limit = it2 + 1
-        end
-        
-        it2 += 1
-      end
-
-      it1 += 1
+      break if i1 == i2
+      return [ints[i1], ints[i2]] if ints[i1] + ints[i2] == s
+      i1 += 1
     end
-    
-    chunk += CHUNK_SIZE
+    i2 += 1
   end
-  
-  result = arr.sort_by { |_, (ind1, ind2)| ind2 }.first 
-  result ? result[0] : nil
+  nil
 end
 
 l1= [1, 4, 8, 7, 3, 15]
