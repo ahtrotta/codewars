@@ -44,28 +44,50 @@ ALGORITHM:
 #  end
 #end
 
-def list_squared(m, n)
-  hsh = {}
+#def list_squared(m, n)
+#  hsh = {}
+#  loop do
+#    break if m == n + 1
+#    sum = m**2
+#    div = 1
+#
+#    loop do
+#      break if div == (m / 2) + 1
+#      if m % div == 0
+#        sum += div**2
+#      end
+#      div += 1
+#    end
+#
+#    if Math.sqrt(sum) % 1 == 0
+#      hsh[m] = sum
+#    end
+#
+#    m += 1
+#  end
+#  hsh.to_a
+#end
+
+def get_divisors(num)
+  arr = []
+  limit = Math.sqrt(num)
+  current = 1
   loop do
-    break if m == n + 1
-    sum = m**2
-    div = 1
-
-    loop do
-      break if div == (m / 2) + 1
-      if m % div == 0
-        sum += div**2
-      end
-      div += 1
+    break if current > limit
+    if num % current == 0
+      arr << current
+      arr << (num / current) if current != num / current
     end
-
-    if Math.sqrt(sum) % 1 == 0
-      hsh[m] = sum
-    end
-
-    m += 1
+    current += 1
   end
-  hsh.to_a
+  arr
+end
+
+def list_squared(m, n)
+  (m..n).each_with_object([]) do |num, arr|
+    sum = get_divisors(num).map { |el| el**2 }.sum
+    arr << [num, sum] if Math.sqrt(sum) == Math.sqrt(sum).to_i
+  end
 end
 
 # test cases
