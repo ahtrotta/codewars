@@ -45,7 +45,6 @@ algorithm:
   - add 1 to iterator1
 
 =end
-require 'pry'
 
 #def sum_pairs(ints, s)
 #  arr = []
@@ -71,9 +70,6 @@ require 'pry'
 #  result = arr.sort_by { |_, (ind1, ind2)| ind2 }.first 
 #  result ? result[0] : nil
 #end
-require 'pry'
-
-CHUNK_SIZE = 4
 
 #def sum_pairs(ints, s)
 #  arr = []
@@ -110,20 +106,40 @@ CHUNK_SIZE = 4
 #  result ? result[0] : nil
 #end
 
+#def sum_pairs(ints, s)
+#  i2 = 1
+#  loop do
+#    break if i2 == ints.size
+#    i1 = 0
+#    loop do
+#      break if i1 == i2
+#      return [ints[i1], ints[i2]] if ints[i1] + ints[i2] == s
+#      i1 += 1
+#    end
+#    i2 += 1
+#  end
+#  nil
+#end
+
+# input
+#   - array of integers, sum value (integer)
+# 
+# output
+#   - array of two integers that add up to sum value
+#
+# algorithm
+#   - iterate through array
+#     - add each element to another array to keep track of seen_values
+#     - if sum - current element is in seen_values return
+
 def sum_pairs(ints, s)
-  i2 = 1
-  loop do
-    break if i2 == ints.size
-    i1 = 0
-    loop do
-      break if i1 == i2
-      return [ints[i1], ints[i2]] if ints[i1] + ints[i2] == s
-      i1 += 1
-    end
-    i2 += 1
+  ints.each_with_object([]) do |n, seen|
+    return [(s - n), n] if seen.include?(s - n)
+    seen << n unless seen.include?(n)
   end
   nil
 end
+
 
 l1= [1, 4, 8, 7, 3, 15]
 l2= [1, -2, 3, 0, -6, 1]
@@ -135,8 +151,8 @@ l7= [0, 2, 0]
 l8= [5, 9, 13, -3]
 l9= [0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0]
 
-p sum_pairs(l1, 8) == [1, 7]
-p sum_pairs(l2, -6) == [0, -6]
+p sum_pairs(l1, 8) #== [1, 7]
+p sum_pairs(l2, -6) #== [0, -6]
 p sum_pairs(l3, -7) == nil
 p sum_pairs(l4, 2) == [1, 1]
 p sum_pairs(l5, 10) == [3, 7]
