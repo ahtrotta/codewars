@@ -7,15 +7,53 @@ INPUT(S):
 OUTPUTS(S):
 
 ALGORITHM:
+  - get initial sum
+  - loop until the array is the specified size
+    - add sum to array
+    - add sum to itself
+    - subtract the element at the -(size of the initial array)
 
 =end
 
+#def Xbonacci(s, n)
+#  sum_num = s.size
+#  until s.size == n
+#    s << s[-sum_num..-1].sum
+#  end
+#  s
+#end
+
+#def Xbonacci(s, n)
+#  sum = s.sum
+#  neg_idx = s.size + 1
+#  until s.size == n
+#    s << sum
+#    sum = (sum * 2) - s[-neg_idx]
+#  end
+#  s
+#end
+#
+# algo3
+#   - initialize frame to be initial array
+#   - initialize return array of nil values
+#   - iterate through return array
+#     - get frame_sum
+#     - add frame_sum to return array
+
 def Xbonacci(s, n)
-  sum_num = s.size
-  until s.size == n
-    s << s.last(sum_num).sum
+  sum = s.sum
+  size = s.size
+  out_arr = s + [nil] * (n - size)
+  idx = size
+
+  loop do 
+    break if idx == n
+    out_arr[idx] = sum
+    sum = sum + sum - out_arr[idx - size]
+    idx += 1
   end
-  s
+
+  out_arr
 end
 
 # test cases
