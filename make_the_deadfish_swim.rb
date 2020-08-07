@@ -2,7 +2,7 @@ def parse(data)
   data = data.delete('^idso')
   value = 0
 
-  data.each_char.with_object do |c, arr|
+  data.each_char.with_object([]) do |c, arr|
     case c
     when 'i'    then value += 1
     when 'd'    then value -= 1
