@@ -1,4 +1,5 @@
 def remove_smallest(n, arr)
+  return [] if n > arr.size
   arr_sort = arr.sort
   arr_copy = arr.dup
   until n < 1
