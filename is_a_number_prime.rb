@@ -45,12 +45,25 @@
 #  end
 #  true
 #end
-
-require 'prime'
+#
+#require 'prime'
+#
+#def isPrime(num)
+#  return false if num < 2
+#  Prime.each(num / 2) { |prime| return false if num % prime == 0 }
+#  true
+#end
 
 def isPrime(num)
   return false if num < 2
-  Prime.each(num / 2) { |prime| return false if num % prime == 0 }
+
+  lim = Math.sqrt(num)
+  return false if lim == lim.to_i
+
+  (2..lim).each do |n|
+    return false if num % n == 0
+  end
+
   true
 end
 
