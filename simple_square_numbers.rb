@@ -1,10 +1,4 @@
-SQUARES = [0, 1, 4, 9]
-
 def solve(n)
-  idx = 1
-  
-  loop do
-  end
 end
 
 p solve(1) == -1
