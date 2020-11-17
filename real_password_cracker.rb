@@ -1,19 +1,54 @@
+#def password_cracker(hash)
+#  (1..5).each do |n|
+#    counter = 0
+#
+#    loop do
+#      pword_str = sprintf("%#{n}s", counter.to_s(26)).gsub(' ', '0')
+#      pword = pword_str.chars.map { |c| ALPHABET[c.to_i(26)] }.join
+#      hsh = Digest::SHA1.hexdigest(pword)
+#      return pword if hsh == hash
+#      break if pword == 'z' * n
+#      counter += 1
+#    end
+#  end
+#end
+
 require 'digest'
 
-ALPHABET = ('a'..'z').to_a
-BASE = ('0'..'9').to_a + ('a'..'z').to_a
+class Password
+  ALPHABET = 'abcdefghijklmnopqrstuvwxyz'
+
+  def initialize(size)
+    @size = size
+    @array = [0] * size
+  end
+
+  def increment
+    if @array.last < 25
+      @array[-1] += 1
+    else
+      num = @array.reverse.map.with_index { |n, i| n * 26**i }.sum
+      num_str = sprintf("%#{@size}s", (num + 1).to_s(26)).gsub(' ', '0')
+      @array = num_str.chars.map { |c| c.to_i(26) }
+    end
+  end
+
+  def get
+    @array.map { |i| ALPHABET[i] }.join
+  end
+end
 
 def password_cracker(hash)
   (1..5).each do |n|
-    counter = 0
+    p = Password.new(n)
+    last_pword = 'z' * n
 
     loop do
-      pword_str = sprintf("%#{n}s", counter.to_s(26)).gsub(' ', '0')
-      pword = pword_str.chars.map { |c| ALPHABET[c.to_i(26)] }.join
+      pword = p.get
       hsh = Digest::SHA1.hexdigest(pword)
       return pword if hsh == hash
-      break if pword == 'z' * n
-      counter += 1
+      break if pword == last_pword
+      p.increment
     end
   end
 end
